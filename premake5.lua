@@ -26,7 +26,6 @@ include "calane/vendor/glad"
 
 project "calane"
 	location "calane"
-	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
 
@@ -73,11 +72,13 @@ project "calane"
 		systemversion "latest"
 
 	filter "configurations:Debug"
+		kind "ConsoleApp"
 		defines "CL_DEBUG"
 		symbols "On"
 		runtime "Debug"
 
 	filter "configurations:Release"
+		kind "WindowedApp"
 		defines "CL_RELEASE"
 		optimize "Speed"
 		runtime "Release"

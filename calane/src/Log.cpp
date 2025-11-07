@@ -2,12 +2,13 @@
 #include "Log.h"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "Application.h"
 
 namespace Calane
 {
 	std::shared_ptr<spdlog::logger> Log::s_Logger;
 
-	void Log::init()
+    void Log::init()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 

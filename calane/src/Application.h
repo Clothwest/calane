@@ -1,6 +1,7 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
+#include "Window.h"
+#include "Event/Event.h"
 
 namespace Calane
 {
@@ -10,11 +11,17 @@ namespace Calane
 		Application();
 		~Application();
 
+		void run();
+
+		void onEvent(Event &e);
+
 	private:
 		void init();
 
 	private:
-		std::unique_ptr<GLFWwindow> window;
+		std::unique_ptr<Window> m_Window;
+
+		bool m_Running = true;
 	};
 }
 
