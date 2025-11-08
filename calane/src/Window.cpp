@@ -5,10 +5,10 @@
 #include "Event/KeyEvent.h"
 #include "Event/MouseEvent.h"
 
+#include <glad/glad.h>
+
 namespace Calane
 {
-	static bool s_glfwInitialized = false;
-
 	static void glfw_errorCallback(int error_code, const char *description)
 	{
 		CL_ERROR("GLFW Error: {0}, {1}", error_code, description);
@@ -42,28 +42,31 @@ namespace Calane
 
 	void Window::init(const WindowProps &props)
 	{
+		int success = glfwInit();
+		CL_ASSERT(success, "Could not initialize GLFW");
+		glfwSetErrorCallback(glfw_errorCallback);
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
 		CL_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!s_glfwInitialized)
-		{
-			// TODO: glfwTerminate on system shutdown
-			int success = glfwInit();
-			CL_ASSERT(success, "Could not initialize GLFW");
-			glfwSetErrorCallback(glfw_errorCallback);
-
-			s_glfwInitialized = true;
-		}
-
 		m_Window = glfwCreateWindow(props.Width, props.Height, props.Title.c_str(), nullptr, nullptr);
+		CL_ASSERT(m_Window, "Failed to create GLFW window");
 		glfwMakeContextCurrent(m_Window);
+
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		CL_ASSERT(status, "Failed to initialize GLAD");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		setVSync(false);
 
-		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
+		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
@@ -77,7 +80,7 @@ namespace Calane
 			WindowCloseEvent event;
 			data.EventCallback(event);
 			});
-		
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 
@@ -119,11 +122,13 @@ namespace Calane
 				{
 					MouseButtonPressEvent event(button);
 					data.EventCallback(event);
+					break;
 				}
 				case GLFW_RELEASE:
 				{
 					MouseButtonReleaseEvent event(button);
 					data.EventCallback(event);
+					break;
 				}
 			}
 			});
@@ -138,5 +143,6 @@ namespace Calane
 	void Window::shutdown()
 	{
 		glfwDestroyWindow(m_Window);
+		glfwTerminate();
 	}
 }

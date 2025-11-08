@@ -26,6 +26,7 @@ namespace Calane
 		Window(const WindowProps &props = WindowProps());
 		~Window();
 
+		inline GLFWwindow *getWindow() const { return m_Window; }
 		inline unsigned int getWidth() const { return m_Data.Width; }
 		inline unsigned int getHeight() const { return m_Data.Height; }
 

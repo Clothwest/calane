@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Window.h"
-#include "Event/Event.h"
+#include "Calane.h"
 
 namespace Calane
 {
@@ -11,15 +10,16 @@ namespace Calane
 		Application();
 		~Application();
 
+		void init();
 		void run();
 
 		void onEvent(Event &e);
 
-	private:
-		void init();
+		bool onWindowClose(WindowCloseEvent &e);
 
 	private:
 		std::unique_ptr<Window> m_Window;
+		LayerStack m_LayerStack;
 
 		bool m_Running = true;
 	};
