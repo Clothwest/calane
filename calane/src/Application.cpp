@@ -29,12 +29,12 @@ namespace Calane
 			glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			m_Window->onUpdate();
-
 			for (Layer *layer : m_LayerStack)
 			{
 				layer->onUpdate();
 			}
+
+			m_Window->onUpdate();
 		}
 	}
 
