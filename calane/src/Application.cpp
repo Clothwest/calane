@@ -1,6 +1,8 @@
 #include "clpch.h"
 #include "Application.h"
 
+#define BIND_EVENT_FN(fn) std::bind(&Application::fn, this, std::placeholders::_1)
+
 namespace Calane
 {
 	Application::Application()
@@ -29,6 +31,6 @@ namespace Calane
 	void Application::init()
 	{
 		m_Window = std::make_unique<Window>();
-		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+		m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 	}
 }

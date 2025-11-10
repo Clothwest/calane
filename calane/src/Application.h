@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Window.h"
-#include "Event/Event.h"
+#include "Calane.h"
 
 namespace Calane
 {
