@@ -23,7 +23,7 @@ namespace Calane
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPress: " << m_KeyCode << "(" << m_RepeatCount << "repeats)";
+			ss << "KeyPressEvent: " << m_KeyCode << "(" << m_RepeatCount << "repeats)";
 			return ss.str();
 		}
 
@@ -41,7 +41,7 @@ namespace Calane
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyRelease: " << m_KeyCode;
+			ss << "KeyReleaseEvent: " << m_KeyCode;
 			return ss.str();
 		}
 

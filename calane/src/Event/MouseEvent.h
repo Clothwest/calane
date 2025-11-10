@@ -44,7 +44,7 @@ namespace Calane
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonPress: " << m_Button;
+			ss << "MouseButtonPressEvent: " << m_Button;
 			return ss.str();
 		}
 

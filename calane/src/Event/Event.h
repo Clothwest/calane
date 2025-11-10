@@ -21,8 +21,6 @@ namespace Calane
 		virtual const char *getName() const = 0;
 		virtual std::string toString() const { return getName(); };
 
-		inline bool isHandled() const { return m_Handled; }
-
 	private:
 		bool m_Handled = false;
 	};

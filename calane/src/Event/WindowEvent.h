@@ -12,7 +12,7 @@ namespace Calane
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowResize: " << m_Width << ", " << m_Height;
+			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
 			return ss.str();
 		}
 
@@ -30,7 +30,7 @@ namespace Calane
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowClose";
+			ss << "WindowCloseEvent";
 			return ss.str();
 		}
 
