@@ -19,9 +19,9 @@ namespace Calane
 		void init();
 
 	private:
-		std::unique_ptr<Window> m_Window;
-
 		bool m_Running = true;
+
+		std::unique_ptr<Window> m_Window;
 	};
 }
 

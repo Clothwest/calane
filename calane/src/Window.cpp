@@ -7,13 +7,6 @@
 
 namespace Calane
 {
-	static bool s_glfwInitialized = false;
-
-	static void glfw_errorCallback(int error_code, const char *description)
-	{
-		CL_ERROR("GLFW Error: {0}, {1}", error_code, description);
-	}
-
 	Window::Window(const WindowProps &props)
 	{
 		init(props);
@@ -48,15 +41,11 @@ namespace Calane
 
 		CL_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!s_glfwInitialized)
-		{
-			// TODO: glfwTerminate on system shutdown
-			int success = glfwInit();
-			CL_ASSERT(success, "Could not initialize GLFW");
-			glfwSetErrorCallback(glfw_errorCallback);
-
-			s_glfwInitialized = true;
-		}
+		int success = glfwInit();
+		CL_ASSERT(success, "Could not initialize GLFW");
+		glfwSetErrorCallback([](int error_code, const char *description) {
+			CL_ERROR("GLFW Error: {0}, {1}", error_code, description);
+			});
 
 		m_Window = glfwCreateWindow(props.Width, props.Height, props.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
@@ -77,7 +66,7 @@ namespace Calane
 			WindowCloseEvent event;
 			data.EventCallback(event);
 			});
-		
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
 			WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 
@@ -138,5 +127,6 @@ namespace Calane
 	void Window::shutdown()
 	{
 		glfwDestroyWindow(m_Window);
+		glfwTerminate();
 	}
 }
