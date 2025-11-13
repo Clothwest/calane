@@ -5,6 +5,8 @@
 #include "Event/KeyEvent.h"
 #include "Event/MouseEvent.h"
 
+#include "Renderer/Context.h"
+
 namespace Calane
 {
 	Window::Window(const WindowProps &props)
@@ -19,7 +21,7 @@ namespace Calane
 
 	void Window::onUpdate()
 	{
-		glfwSwapBuffers(m_Window);
+		m_Context.swapBuffers();
 		glfwPollEvents();
 	}
 
@@ -35,20 +37,27 @@ namespace Calane
 
 	void Window::init(const WindowProps &props)
 	{
-		m_Data.Title = props.Title;
-		m_Data.Width = props.Width;
-		m_Data.Height = props.Height;
-
-		CL_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
-
 		int success = glfwInit();
 		CL_ASSERT(success, "Could not initialize GLFW");
 		glfwSetErrorCallback([](int error_code, const char *description) {
 			CL_ERROR("GLFW Error: {0}, {1}", error_code, description);
 			});
 
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+		m_Data.Title = props.Title;
+		m_Data.Width = props.Width;
+		m_Data.Height = props.Height;
+
+		CL_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+
 		m_Window = glfwCreateWindow(props.Width, props.Height, props.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
+
+		m_Context = Context(m_Window);
+		m_Context.init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		setVSync(false);
 

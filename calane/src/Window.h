@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Event/Event.h"
+#include "Renderer/Context.h"
 
 namespace Calane
 {
@@ -40,8 +41,6 @@ namespace Calane
 		void shutdown();
 
 	private:
-		GLFWwindow *m_Window;
-
 		struct WindowData
 		{
 			std::string Title;
@@ -51,6 +50,8 @@ namespace Calane
 			EventCallbackFn EventCallback;
 		};
 
+		GLFWwindow *m_Window;
 		WindowData m_Data;
+		Context m_Context;
 	};
 }

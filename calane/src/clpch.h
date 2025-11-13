@@ -6,6 +6,8 @@
 
 #include <string>
 #include <sstream>
+#include <fstream>
+#include <unordered_map>
 
 #include "Log.h"
 
