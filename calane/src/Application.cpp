@@ -88,8 +88,6 @@ namespace Calane
 		m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 
 		m_Renderer = std::make_unique<Renderer>();
-		Shader::setGetUsingIDCallback(BIND_RENDERER_FN(Renderer::getShaderID));
-		VertexArray::setGetUsingIDCallback(BIND_RENDERER_FN(Renderer::getVertexArrayID));
 		VertexBuffer::setGetUtilVertexArrayIDCallback(BIND_RENDERER_FN(Renderer::getUtilVertexArrayID));
 		IndexBuffer::setGetUtilVertexArrayIDCallback(BIND_RENDERER_FN(Renderer::getUtilVertexArrayID));
 	}

@@ -19,16 +19,16 @@ namespace Calane
 		inline uint32_t getShaderID() const { return m_Shader->getID(); }
 		inline uint32_t getVertexArrayID() const { return m_VertexArray->getID(); }
 
-		void attach(Shader &shader);
-		void attach(VertexArray &vertexBuffer);
+		void attach(const Shader &shader);
+		void attach(const VertexArray &vertexBuffer);
 
 		void drawArrays(DrawMode mode, int first, int count);
 		void drawIndexes(DrawMode mode, int count, Type type);
 
 	private:
-		std::unique_ptr<VertexArray> m_UtilVertexArray;
+		VertexArray *m_UtilVertexArray = nullptr;
 
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexArray> m_VertexArray;
+		const Shader *m_Shader = nullptr;
+		const VertexArray *m_VertexArray = nullptr;
 	};
 }

@@ -1,7 +1,6 @@
 #include "clpch.h"
 #include "Application.h"
 
-
 #if defined CL_RELEASE
 int WinMain(
 	HINSTANCE hInstance,

@@ -4,22 +4,23 @@
 namespace Calane
 {
 	Renderer::Renderer()
-		: m_UtilVertexArray(std::make_unique<VertexArray>())
+		: m_UtilVertexArray(new VertexArray())
 	{
 	}
 
 	Renderer::~Renderer()
 	{
+		delete m_UtilVertexArray;
 	}
 
-	void Renderer::attach(Shader &shader)
+	void Renderer::attach(const Shader &shader)
 	{
-		m_Shader.reset(&shader);
+		m_Shader = &shader;
 	}
 
-	void Renderer::attach(VertexArray &vertexBuffer)
+	void Renderer::attach(const VertexArray &vertexBuffer)
 	{
-		m_VertexArray.reset(&vertexBuffer);
+		m_VertexArray = &vertexBuffer;
 	}
 
 	void Renderer::drawArrays(DrawMode mode, int first, int count)

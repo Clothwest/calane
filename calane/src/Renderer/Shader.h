@@ -11,10 +11,6 @@ namespace Calane
 		~Shader();
 
 		inline uint32_t getID() const { return m_RendererID; }
-		inline static void setGetUsingIDCallback(const GetIDCallback &getUsingIDCallback) { s_GetUsingIDCallback = getUsingIDCallback; }
-
-		void bind()  const;
-		void unBind() const;
 
 		template <int C, typename T, typename... Args>
 		bool setUniform(const std::string &uniformName, Args&&... args);
@@ -28,8 +24,6 @@ namespace Calane
 	private:
 		uint32_t m_RendererID;
 		std::unordered_map<std::string, int> m_LocationCache;
-
-		static GetIDCallback s_GetUsingIDCallback;
 	};
 
 	template <int C, typename T, typename... Args>

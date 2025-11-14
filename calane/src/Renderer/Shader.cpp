@@ -5,8 +5,6 @@
 
 namespace Calane
 {
-	GetIDCallback Shader::s_GetUsingIDCallback = nullptr;
-
 	static uint32_t createShader(uint32_t type, const std::string &path)
 	{
 		std::ifstream shaderFile;
@@ -71,16 +69,6 @@ namespace Calane
 
 	Shader::~Shader()
 	{
-	}
-
-	void Shader::bind() const
-	{
-		glUseProgram(m_RendererID);
-	}
-
-	void Shader::unBind() const
-	{
-		glUseProgram(0);
 	}
 
 	int Shader::getUniformLocation(const std::string &uniformName)
